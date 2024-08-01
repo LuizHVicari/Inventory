@@ -1,0 +1,57 @@
+{% extends '_base.html' %}
+
+
+{% block content %}
+
+<div class="flex flex-col">
+  {% include 'components/_alerts.html' %}
+ 
+  <div class="flex justify-center mb-2 py-4">
+    <form method="GET" action="{% url 'search_item' %}">
+      <input name="search" type="search" class="rounded-lg py-1 align-middle bg-slate-400 px-3 dark:text-slate-600 font-bold" placeholder="Item">
+      <button type="submit" class="align-middle">
+        <svg class="w-6 h-6 dark:text-slate-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+        </svg>
+        
+      </button>
+    </form>
+  </div>
+  <div class="-m-1.5 overflow-x-auto">
+    <div class="p-1.5 min-w-full inline-block align-middle">
+      <div class="border rounded-lg shadow-lg shadow-slate-600/20 overflow-hidden border-slate-600">
+        <table class="min-w-full divide-y divide-slate-600">
+          <caption class="caption-bottom dark:bg-slate-700 dark:text-slate-400 py-2">Itens disponíveis na Sala de Apoio</caption>
+          <thead class="bg-slate-700 ">
+            <tr class="divide-gray-200 text-slate-400 font-bold">
+              <th scope="col" class="px-6 py-3 text-center text-xs uppercase">Item</th>
+              <th scope="col" class="px-6 py-3 text-center text-xs uppercase">Quantidade</th>
+              <th scope="col" class="px-6 py-3 text-center text-xs uppercase">Quantidade disponível</th>
+              <th scope="col" class="px-6 py-3 text-end text-xs uppercase">Número de patrimônio</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-500">
+            {% for item in items %}
+              <tr class="dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-500 text-center">
+                <td class="px-6 py-3 whitespace-nowrap text-sm font-medium dark:text-slate-50">{{ item.name | capfirst }}</td>
+                <td class="px-6 py-3 whitespace-nowrap text-sm">{{ item.quantity }}</td>
+                <td class="px-6 py-3 whitespace-nowrap text-sm {% if item.quantity_available == 0 %} bg-rose-600 text-rose-300 {% endif %}">{{ item.quantity_available }}</td>
+                <td class="px-6 py-3 whitespace-nowrap text-end text-sm">
+                  {% if item.patrimony_number %}
+                    {{ item.patrimony_number }}
+                  {% else %}
+                    Não há
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+  
+{% endblock content %}
+  

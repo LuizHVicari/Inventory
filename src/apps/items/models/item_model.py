@@ -29,5 +29,5 @@ class Item(models.Model):
 
   def clean(self) -> None:
     if self.quantity_available > self.quantity:
-      raise ValidationError({'quantity_available':'A quantidade disponível não pode ser maior que a quantidade total'})
+      raise ValidationError('A quantidade disponível não pode ser maior que a quantidade total')
     return super().clean()
