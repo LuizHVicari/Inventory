@@ -1,5 +1,7 @@
+from typing import Iterable
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 
 from .location_model import Location
 
@@ -8,7 +10,7 @@ class Item(models.Model):
   name = models.CharField(max_length=50, verbose_name='nome')
   description = models.TextField(verbose_name='descrição', blank=True, null=True)
   quantity = models.IntegerField(validators=[MinValueValidator(1)], verbose_name='quantidade')
-  quantity_avaliable = models.IntegerField(validators=[MinValueValidator(0)], verbose_name='quantidade disponível')
+  quantity_available = models.IntegerField(validators=[MinValueValidator(0)], verbose_name='quantidade disponível')
   patrimony_number = models.CharField(max_length=20, blank=True, null=True, verbose_name='número de patrimônio', unique=True)
   location = models.ManyToManyField(Location, related_name='item', verbose_name='lugar')
 
@@ -23,3 +25,9 @@ class Item(models.Model):
   
   def __str__(self):
     return self.name
+  
+
+  def clean(self) -> None:
+    if self.quantity_available > self.quantity:
+      raise ValidationError({'quantity_available':'A quantidade disponível não pode ser maior que a quantidade total'})
+    return super().clean()

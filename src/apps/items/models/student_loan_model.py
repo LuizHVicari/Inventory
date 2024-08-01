@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Any, Iterable
 from django.db import models
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
@@ -32,6 +32,23 @@ class StudentLoan(models.Model):
   def clean(self) -> None:
     if self.student.nothing_listed_emmited:
       raise ValidationError({'student': 'Não é possível fazer empréstimo para alunos com nada consta emitido'})
-    if self.amount > self.item.quantity_avaliable and not self.return_date:
+    if self.amount > self.item.quantity_available and not self.return_date:
       raise ValidationError({'amount': 'A quantidade emprestada não pode ser maior que a quantidade disponível'})
     return super().clean()
+  
+
+  def save(self, *args, **kwargs) -> None:
+    if self.return_date:
+      self.item.quantity_avaliable += self.amount
+      self.item.full_clean()
+      self.item.save()
+    else:
+      self.item.quantity_avaliable -= self.amount
+      self.item.full_clean()
+      self.item.save()
+    return super().save(*args, **kwargs)
+  
+
+  def delete(self, *args, **kwargs) -> tuple[int, dict[str, int]]:
+    self.item.quantity_avaliable += self.amount
+    return super().delete(*args, **kwargs)

@@ -15,9 +15,9 @@ class ItemInline(admin.TabularInline):
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-  list_display = ['name', 'quantity', 'quantity_avaliable', 'patrimony_number', 'created_at']
-  list_editable = ['quantity', 'quantity_avaliable']
-  list_filter = ['name', 'location', 'created_at', 'updated_at']
+  list_display = ['name', 'quantity', 'quantity_available', 'patrimony_number', 'created_at']
+  list_editable = ['quantity']
+  list_filter = ['location', 'created_at', 'updated_at']
   search_fields = ['name', 'patrimony_number', 'location__name']
 
 
