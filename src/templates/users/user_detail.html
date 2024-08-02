@@ -8,6 +8,7 @@
     {% include 'components/_alerts.html' %}
     <div class="mx-auto max-w-5xl">
       <div class="space-y-6 mt-4">
+        <a href="{% url 'account_change_password' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Mudar senha</a>
         {% if student %}
           {% include 'users/_student_table.html' %}
           {% include 'users/_student_loans.html' %}

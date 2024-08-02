@@ -12,6 +12,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
+    'daphne',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -25,10 +27,12 @@ INSTALLED_APPS = [
     'compressor',
     'widget_tweaks',
     'django_extensions',
+    'channels',
 
     # custom
     'apps.users',
-    'apps.items'
+    'apps.items',
+    'apps.chat',
 ]
 
 MIDDLEWARE = [

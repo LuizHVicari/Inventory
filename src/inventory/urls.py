@@ -21,7 +21,6 @@ urlpatterns = [
     path('accounts/login/', allauth_views.LoginView.as_view(), name='account_login'),
     path('accounts/logout/', allauth_views.LogoutView.as_view(), name='account_logout'),
     path('accounts/password/change/', allauth_views.PasswordChangeView.as_view(), name='account_change_password'),
-    path('accounts/password/reset/', allauth_views.PasswordResetView.as_view(), name='account_reset_password'),
     path('accounts/signup/', allauth_views.LoginView.as_view(), name='account_signup'),
 
 ]
