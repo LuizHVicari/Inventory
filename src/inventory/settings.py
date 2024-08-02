@@ -84,8 +84,12 @@ WSGI_APPLICATION = 'inventory.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': config('DB_ENGINE', cast=str, default='django.db.backends.postgresql'),
+        'NAME': config('DB_NAME', cast=str, default='inventory'),
+        'USER': config('DB_USER', cast=str, default='postgres'),
+        'PASSWORD': config('DB_PASSWORD', cast=str, default='postgres'),
+        'HOST': config('DB_HOST', cast=str, default='localhost'),
+        'PORT': config('DB_PORT', cast=str, default=5432),
     }
 }
 
@@ -136,7 +140,6 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_LOGOUT_ON_GET = True
 
 # styles
-
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
 COMPRESS_ROOT = BASE_DIR / 'static'
@@ -147,9 +150,12 @@ STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "BACKEND": config('CACHE_BACKEND', cast=str, default="channels_redis.core.RedisChannelLayer"),
         "CONFIG": {
-            "hosts": [('localhost', 6379)],
+            "hosts": [(
+              config('CACHE_HOST', cast=str, default='localhost'),
+              config('CACHE_PORT', cast=int, default='6379'),    
+            )],
         },
     },
 }
