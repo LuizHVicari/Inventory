@@ -17,6 +17,7 @@ urlpatterns = [
     # path('accounts/', include('allauth.urls')),
     path('', include('apps.items.urls')),
     path('user/', include('apps.users.urls')),
+    path('chat/', include('apps.chat.urls')),
 
     path('accounts/login/', allauth_views.LoginView.as_view(), name='account_login'),
     path('accounts/logout/', allauth_views.LogoutView.as_view(), name='account_logout'),

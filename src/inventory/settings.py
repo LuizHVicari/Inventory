@@ -1,13 +1,25 @@
 from pathlib import Path
 import os
+from loguru import logger
+import sys
+from decouple import config
+
+
+logger.remove()
+logger.add(sys.stderr, level=config('CONSOLE_LOG_LEVEL', cast=str, default='WARNING'))
+logger.add('log.log', level='INFO')
+logger.add('warnings.log', level='WARNING')
+logger.add('critical.log', level='CRITICAL')
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_ROOT = os.path.normpath(os.path.dirname(__file__))
 
-SECRET_KEY = 'django-insecure-0opo8&rx88uub2%gho4x54h^=wo+9^b@!2yryi@p(+68p^^u&!'
+ASGI_APPLICATION = "inventory.asgi.application"
 
-DEBUG = True
+SECRET_KEY = config('DJANGO_SECRET_KEY', cast=str)
+
+DEBUG = config('DJANGO_DEBUG', cast=bool, default=False)
 
 ALLOWED_HOSTS = ['*']
 
@@ -132,3 +144,12 @@ COMPRESS_ROOT = BASE_DIR / 'static'
 COMPRESS_ENABLED = True
 
 STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [('localhost', 6379)],
+        },
+    },
+}
