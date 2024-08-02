@@ -19,7 +19,7 @@ class StudentLoans(TemplateView):
     try:
       student = Student.objects.get(user=user)
     except Student.DoesNotExist:
-      messages.error('Apenas disponível para estudantes')
+      messages.error(request, 'Apenas disponível para estudantes')
       return redirect('my_user_details')
     else:
       student_active_loans = StudentLoan.objects.filter(student=student)

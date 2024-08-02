@@ -5,9 +5,17 @@
         <div class="p-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
           <span class="font-medium">Erro: </span>{{ message }}
         </div>
-      {% else %}
-        <div class="p-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-          <span class="font-medium">Erro: </span>{{ message }}
+      {% elif message.tags == 'success' %}
+        <div class="p-4 text-sm text-emerald-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-emerald-400" role="alert">
+          <span class="font-medium">Sucesso: </span>{{ message }}
+        </div>
+      {% elif message.tags == 'info' %}
+        <div class="p-4 text-sm text-blue-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+          <span class="font-medium">info: </span>{{ message }}
+        </div>   
+      {% elif message.tags == 'warning' %}
+        <div class="p-4 text-sm text-yellow-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:yellow-blue-400" role="alert">
+          <span class="font-medium">Aviso: </span>{{ message }}
         </div>
       {% endif %}    
     {% endfor %}
