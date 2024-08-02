@@ -16,3 +16,7 @@ class Department(models.Model):
   class Meta:
     verbose_name = 'Departamento'
     verbose_name_plural = 'Departamentos'
+
+  
+  def __str__(self):
+    return self.name

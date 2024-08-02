@@ -1,0 +1,31 @@
+<div class="-m-1.5 overflow-x-auto">
+  <div class="p-1.5 min-w-full inline-block align-middle">
+    <div class="border rounded-lg shadow-lg shadow-slate-600/20 overflow-hidden border-slate-600">
+      <table class="min-w-full divide-y divide-slate-600">
+        <caption class="caption-top dark:bg-slate-900 dark:text-slate-400 py-2 text-lg font-bold">Empréstimos {% if student_loans_active %}Ativos {% endif %}do Estudante</caption>
+        <thead class="bg-slate-700 ">
+          <tr class="divide-gray-200 text-slate-400 font-bold">
+            <th scope="col" class="px-6 py-3 text-center text-xs uppercase">Item</th>
+            <th scope="col" class="px-6 py-3 text-center text-xs uppercase">Quantidade</th>
+            <th scope="col" class="px-6 py-3 text-center text-xs uppercase">Data de empréstimo</th>
+            <th scope="col" class="px-6 py-3 text-center text-xs uppercase">Devolvido</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-500">
+            <tr class="dark:bg-slate-800 dark:text-slate-200 text-center">
+              {% for loan in loans %}
+                <td class="px-6 py-3 whitespace-nowrap text-sm">{{ loan.item }}</td>
+                <td class="px-6 py-3 whitespace-nowrap text-sm">{{ loan.amount }}</td>
+                <td class="px-6 py-3 whitespace-nowrap text-sm">{{ loan.date_of_loan }}</td>
+                {% if loan.return_date %}
+                  <td class="px-6 py-3 whitespace-nowrap text-sm bg-emerald-800 text-emerald-400">Sim</td>  
+                {% else %}
+                  <td class="px-6 py-3 whitespace-nowrap text-sm bg-rose-600 text-rose-400">Não</td>
+                {% endif %}
+              {% endfor %}
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

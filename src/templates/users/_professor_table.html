@@ -1,0 +1,37 @@
+<div class="-m-1.5 overflow-x-auto">
+  <div class="p-1.5 min-w-full inline-block align-middle">
+    <div class="border rounded-lg shadow-lg shadow-slate-600/20 overflow-hidden border-slate-600">
+      <table class="min-w-full divide-y divide-slate-600">
+        <caption class="caption-top dark:bg-slate-900 dark:text-slate-400 py-2 text-lg font-bold">Dados do Professor</caption>
+        <thead class="bg-slate-700 ">
+          <tr class="divide-gray-200 text-slate-400 font-bold">
+            <th scope="col" class="px-6 py-3 text-center text-xs uppercase">Nome</th>
+            <th scope="col" class="px-6 py-3 text-center text-xs uppercase">Departamento</th>
+            <th scope="col" class="px-6 py-3 text-center text-xs uppercase">Email</th>
+            <th scope="col" class="px-6 py-3 text-center text-xs uppercase">Código SIAPE</th>
+            <th scope="col" class="px-6 py-3 text-end text-xs uppercase">Cursos</th>
+            <th scope="col" class="px-6 py-3 text-end text-xs uppercase">Criado em</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-500">
+            <tr class="dark:bg-slate-800 dark:text-slate-200 text-center">
+              <td class="px-6 py-3 whitespace-nowrap text-sm">{{ professor.name | capfirst }}</td>
+              <td class="px-6 py-3 whitespace-nowrap text-sm">{{ professor.department.acronym | upper }}</td>
+              <td class="px-6 py-3 whitespace-nowrap text-end text-sm">{{ professor.user.email }}</td>
+              <td class="px-6 py-3 whitespace-nowrap text-end text-sm">{{ professor.siape }}</td>
+              <td class="px-6 py-3 whitespace-nowrap text-end text-sm">
+                <ul>
+                  {% for course in professor.courses.all %}
+                  <li>
+                    {{ course.name}} 
+                  </li>
+                  {% endfor %}
+                </ul>
+              </td>
+              <td class="px-6 py-3 whitespace-nowrap text-end text-sm">{{ professor.created_at | date }}</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

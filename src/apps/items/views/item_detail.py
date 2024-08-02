@@ -9,7 +9,7 @@ from apps.items.models import Item
 
 
 
-class SearchItem(TemplateView):
+class ItemDetails(TemplateView):
   def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
     item_name = self.request.GET.get('search')
 
@@ -19,6 +19,9 @@ class SearchItem(TemplateView):
       if not result:
         messages.error(request, 'Item não encontrado')
         return redirect('list_items')
+    elif kwargs.get('pk'):
+      pk = kwargs.get('pk')
+      result = Item.objects.get(id=pk)
     else:
       messages.error(request, 'Informe um item')
       return redirect('list_items')
@@ -27,8 +30,10 @@ class SearchItem(TemplateView):
       'item': result
     }
     return render(request, 'items/item_detail.html', context)
+  
 
 
 
 
-search_item_view = SearchItem.as_view()
+
+item_details_view = ItemDetails.as_view()

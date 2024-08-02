@@ -1,0 +1,58 @@
+{% extends "_base.html" %}
+
+
+{% block content %}
+
+<section class="bg-white pt-8 antialiased dark:bg-gray-900 md:py-10 w-full">
+  <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+    <div class="mx-auto max-w-5xl">
+      <div class="space-y-6 mt-4">
+        {% if student %}
+          {% include 'users/_student_table.html' %}
+          {% include 'users/_student_loans.html' %}
+
+          {% if student_can_ask_nothing_listed %}
+            <p class="text-lg font-semibold text-gray-900 dark:text-slate-400">
+              Como aluno, você não tem nenhum item listado, portanto é possível emitir o nada consta.
+            </p>
+          {% else %}
+            <p class="text-lg font-semibold text-gray-900 dark:text-slate-400 align-middle">
+              Você tem itens não devolvidos como aluno, portanto, não é possível emitir o nada consta.
+            </p>
+          {% endif %}
+            
+      {% endif %}
+
+        
+      {% if professor %}
+
+        {% include 'users/_professor_table.html' %}
+        {% include 'users/_professor_loans.html' %}
+
+        {% if professor_can_ask_nothing_listed %}
+            <p class="text-lg font-semibold text-gray-900 dark:text-slate-400">
+              Como professor, você não tem nenhum item listado, portanto é possível emitir o nada consta.
+            </p>
+          {% else %}
+            <p class="text-lg font-semibold text-gray-900 dark:text-slate-400 align-middle">
+              Você tem itens não devolvidos como professor, portanto, não é possível emitir o nada consta.
+            </p>
+          {% endif %}
+        
+      {% endif %}
+
+      <p class="text-xl font-semibold text-gray-900 dark:text-slate-400">
+        Total de items em empréstimos ativos: {{ total_loans }}
+      </p>
+          
+          
+
+       
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+  
+{% endblock content %}
+  

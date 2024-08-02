@@ -13,6 +13,7 @@ class Item(models.Model):
   quantity_available = models.IntegerField(validators=[MinValueValidator(0)], verbose_name='quantidade disponível')
   patrimony_number = models.CharField(max_length=20, blank=True, null=True, verbose_name='número de patrimônio', unique=True)
   location = models.ManyToManyField(Location, related_name='item', verbose_name='lugar')
+  available_for_students = models.BooleanField(default=True, verbose_name='Disponível para empréstimos de alunos')
 
   created_at = models.DateTimeField(auto_now_add=True, verbose_name='criado em')
   updated_at = models.DateTimeField(auto_now=True, verbose_name='atualizado em')

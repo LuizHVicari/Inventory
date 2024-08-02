@@ -2,40 +2,39 @@ from typing import Any, Iterable
 from django.db import models
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
-from django.contrib import messages
 from django.utils.timezone import now
 
 from .item_model import Item
-from apps.users.models import Student
+from .location_model import Location
+from apps.users.models import Professor
 
 
-class StudentLoan(models.Model):
-  student = models.ForeignKey(Student, verbose_name='aluno', on_delete=models.PROTECT)
+class ProfessorLoan(models.Model):
+  professor = models.ForeignKey(Professor, verbose_name='professor', on_delete=models.PROTECT)
   item = models.ForeignKey(Item, verbose_name='item', on_delete=models.PROTECT)
   amount = models.IntegerField(validators=[MinValueValidator(1)], verbose_name='quantidade')
   date_of_loan = models.DateField(verbose_name='data do empréstimo', default=now)
   return_date = models.DateField(blank=True, null=True, verbose_name='data da devolução')
+  location = models.ManyToManyField(Location, verbose_name='lugar', blank=True)
 
   created_at = models.DateTimeField(auto_now_add=True, verbose_name='criado em')
   updated_at = models.DateTimeField(auto_now=True, verbose_name='atualizado em')
 
   
   class Meta:
-    verbose_name = 'Empréstimo de Estudante'
-    verbose_name_plural = 'Empréstimos de Estudantes'
+    verbose_name = 'Empréstimo do Professor'
+    verbose_name_plural = 'Empréstimos de Professores'
 
   
   def __str__(self):
-    return f'Aluno: {self.student} item: {self.item} quantidade: {self.amount}'
+    return f'Professor: {self.professor} item: {self.item} quantidade: {self.amount}'
   
 
   def clean(self) -> None:
-    if self.student.nothing_listed_emmited:
-      raise ValidationError({'student': 'Não é possível fazer empréstimo para alunos com nada consta emitido'})
+    if self.professor.nothing_listed_emmited:
+      raise ValidationError({'professor': 'Não é possível fazer empréstimo para alunos com nada consta emitido'})
     if self.amount > self.item.quantity_available and not self.return_date:
       raise ValidationError({'amount': 'A quantidade emprestada não pode ser maior que a quantidade disponível'})
-    if not self.item.available_for_students:
-      raise ValidationError({'item': 'Esse item não pode ser emprestado para um aluno'})
     return super().clean()
   
 

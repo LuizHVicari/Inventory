@@ -5,7 +5,7 @@
                 
                 {% if not user.is_anonymous %}
                     <a href="{% url 'account_logout' %}" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Log Out</a>
-                    <p class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"> {{user | capfirst}}</p>
+                    <a href="{% url 'my_user_details' %}" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">{{user | capfirst}}</a>
                 {% else %}
                     <a href="{% url 'account_login' %}" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Entrar</a>
                 {% endif %}
@@ -25,6 +25,18 @@
                     <li>
                         <a href="{% url 'list_items' %}" class="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Lista de Itens</a>
                     </li>
+                    
+                    {% if user.student_set %}
+                        <li>
+                            <a href="{% url 'student_loans' %}" class="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Empréstimos de Estudante</a>
+                        </li>
+                    {% endif %}
+                    {% if user.professor_set %}
+                        <li>
+                            <a href="{% url 'professor_loans' %}" class="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Empréstimos do Professor</a>
+                        </li>
+                    {% endif %}
+                        
 
                 </ul>
             </div>
