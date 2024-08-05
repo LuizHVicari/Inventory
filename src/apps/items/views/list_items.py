@@ -16,8 +16,8 @@ class ListItems(TemplateView):
     else: 
       items = Item.objects.all()
 
-    if not len(items):
-      messages.error('Nenhum item corresponse à pesquisa')
+    if items.count() == 0:
+      messages.error(request, 'Nenhum item corresponse à pesquisa')
     
     context = {
       'items': items

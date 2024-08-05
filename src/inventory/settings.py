@@ -140,7 +140,11 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_LOGOUT_ON_GET = True
 
 # styles
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'setup/static')
+]   
 
 COMPRESS_ROOT = BASE_DIR / 'static'
 
