@@ -72,9 +72,11 @@ Foram configurados 3 sistemas de logging, um para o terminal e dois em arquivo. 
 
 Para alterar essas configurações, basta editar o início do [arquivo de configurações](src/inventory/settings.py).
 
-## Arquivos estáticos
+## Arquivos estáticos e estilização
 
 Quando o modo do debug está desativado, o Django não serve os arquivos estáticos. A forma de serví-los nesse projeto é com a [biblioteca whitenoise](https://whitenoise.readthedocs.io/en/stable/django.html), contudo, pode ser indicado o uso de [nginx](https://nginx.org/en/) de acordo com os casos de uso.
+
+Caso haja algum erro e os estilos não sejam carregados com DEBUG = False, uma possível solução pode ser encontrada [nesse link](https://www.w3schools.com/django/django_add_static_files.php).
 
 ## Contribuições
 
