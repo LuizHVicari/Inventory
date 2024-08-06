@@ -24,12 +24,9 @@
                         <a href="{% url 'list_items' %}" class="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Lista de Itens</a>
                     </li>
                     
-                    {% if user.student_set %}
+                    {% if not user.is_anonymous %}
                         <li>
                             <a href="{% url 'student_loans' %}" class="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Empréstimos de Estudante</a>
-                        </li>
-                    {% endif %}
-                    {% if user.professor_set %}
                         <li>
                             <a href="{% url 'professor_loans' %}" class="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Empréstimos do Professor</a>
                         </li>

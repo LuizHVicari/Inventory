@@ -10,26 +10,26 @@ from apps.items.models import ProfessorLoan
 
 
 class ProfessorLoans(TemplateView):
-  def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-    context = dict()
-    
-    user = self.request.user
-    context['user'] = user
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        context = dict()
 
-    try:
-      professor = Professor.objects.get(user=user)
-    except professor.DoesNotExist:
-      messages.error('Apenas disponível para professores')
-      return redirect('my_user_details')
-    else:
-      professor_active_loans = ProfessorLoan.objects.filter(professor=professor)
-      total_loans = professor_active_loans.count()
-      context['loans'] = professor_active_loans
-      context['total_loans'] = total_loans
-      context['user_type'] = 'Professor'
+        user = self.request.user
+        context['user'] = user
 
-    print('to aqui')
-    return render(request, 'users/all_loans.html', context)
+        try:
+            professor = Professor.objects.get(user=user)
+        except Professor.DoesNotExist:
+            messages.error(request, 'Apenas disponível para professores')
+            return redirect('list_items')
+        else:
+            professor_active_loans = ProfessorLoan.objects.filter(
+                professor=professor)
+            total_loans = professor_active_loans.count()
+            context['loans'] = professor_active_loans
+            context['total_loans'] = total_loans
+            context['user_type'] = 'Professor'
+
+        return render(request, 'users/all_loans.html', context)
 
 
 professor_loans_view = ProfessorLoans.as_view()

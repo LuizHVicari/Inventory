@@ -20,7 +20,7 @@ class StudentLoans(TemplateView):
       student = Student.objects.get(user=user)
     except Student.DoesNotExist:
       messages.error(request, 'Apenas disponível para estudantes')
-      return redirect('my_user_details')
+      return redirect('list_items')
     else:
       student_active_loans = StudentLoan.objects.filter(student=student)
       total_loans = student_active_loans.count()
