@@ -48,6 +48,8 @@ Apenas o usuário e os adminstradores podem ver o chat. Além disso, os chats se
 
 Foi implementado uma forma de limitar o envio de mensagens de forma experimental, buscando não sobrecarregar o banco de dados com muitas mensagens. O limite de mensagens pode ser configurado nas variávies de ambiente. Além disso, é criado um log toda vez que esse limite for excedido por um usuário.
 
+Além disso, para a execução com Docker, é utilizado o Gunicorn, que não suporta asgi, enquanto oo chat utiliza o django Channels e recomenda Daphne para servir os web sockets. Para utilizar ambos em tempo de desenvolvido é necessário algumas modificações, o caminho a seguir para isso pode ser visto nesse [tópico da Stack Overflow](https://stackoverflow.com/questions/61101278/how-to-run-daphne-and-gunicorn-at-the-same-time).
+
 ## Reserva de itens
 
 Para resevar um item, é necessário que o administrador registre-o no [formulário de reserva de estudantes](http://localhost:8000/admin/items/studentloan/) ou [de professor](http://localhost:8000/admin/items/professorloan/). A separação foi criada para facilitar a implementação de restições de itens, por exemplo, para que certos itens não possam ser emprestados por alunos.
@@ -70,6 +72,10 @@ Foram configurados 3 sistemas de logging, um para o terminal e dois em arquivo. 
 
 Para alterar essas configurações, basta editar o início do [arquivo de configurações](src/inventory/settings.py).
 
+## Arquivos estáticos
+
+Quando o modo do debug está desativado, o Django não serve os arquivos estáticos. A forma de serví-los nesse projeto é com a [biblioteca whitenoise](https://whitenoise.readthedocs.io/en/stable/django.html), contudo, pode ser indicado o uso de [nginx](https://nginx.org/en/) de acordo com os casos de uso.
+
 ## Contribuições
 
 O projeto aceita contribuíções, para encontrar ideias de como contribuir, basta procurar nesse arquivo as próximas _features_ a serem desenvolvidas ou contribuir nas seguintes:
@@ -79,5 +85,9 @@ O projeto aceita contribuíções, para encontrar ideias de como contribuir, bas
 - Adicionar sinais para o sistema de login com e-email, baseado no [django allauth](https://docs.allauth.org/en/latest/account/configuration.html);
 
 - Melhorias em devops e integração com Docker;
+
+- Suporte ao ngnx;
+
+- Configurações para suportar Gunicorn e Daphne em produção.
 
 Além disso, a correção de quaisquer bugs ou problemas de segurança que possam existir são bem vindas.

@@ -6,7 +6,8 @@ from decouple import config
 
 
 logger.remove()
-logger.add(sys.stderr, level=config('CONSOLE_LOG_LEVEL', cast=str, default='WARNING'))
+logger.add(sys.stderr, level=config(
+    'CONSOLE_LOG_LEVEL', cast=str, default='WARNING'))
 logger.add('log.log', level='INFO')
 logger.add('warnings.log', level='WARNING')
 logger.add('critical.log', level='CRITICAL')
@@ -25,7 +26,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'daphne',
-    
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'allauth.account.middleware.AccountMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'inventory.urls'
@@ -65,8 +67,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-          os.path.join(BASE_DIR, 'templates'),
-          os.path.join(BASE_DIR, 'templates', 'allauth'),
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'templates', 'allauth'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -144,7 +146,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'setup/static')
-]   
+]
 
 COMPRESS_ROOT = BASE_DIR / 'static'
 
@@ -157,8 +159,8 @@ CHANNEL_LAYERS = {
         "BACKEND": config('CACHE_BACKEND', cast=str, default="channels_redis.core.RedisChannelLayer"),
         "CONFIG": {
             "hosts": [(
-              config('CACHE_HOST', cast=str, default='localhost'),
-              config('CACHE_PORT', cast=int, default='6379'),    
+                config('CACHE_HOST', cast=str, default='localhost'),
+                config('CACHE_PORT', cast=int, default='6379'),
             )],
         },
     },
